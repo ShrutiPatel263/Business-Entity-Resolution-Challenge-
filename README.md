@@ -1,5 +1,64 @@
 # Business-Entity-Resolution-Challenge-
 
-# Pipeline : 
+## Pipeline : 
 
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/4347c5cb-7c7c-482e-9e76-6150d939b87b" />
+                  ┌──────────────────┐
+                  │   Source 1       │
+                  │ Reference DB     │
+                  └────────┬─────────┘
+                           │
+                           ▼
+                 ┌────────────────────┐
+                 │ Data Cleaning /    │
+                 │ Normalization      │
+                 └────────┬───────────┘
+                          │
+                          ▼
+                 ┌────────────────────┐
+                 │ Candidate Blocking │
+                 │                    │
+                 │ Name + Address +   │
+                 │ Country + Tokens   │
+                 └────────┬───────────┘
+                          │
+                          ▼
+             ┌─────────────────────────────┐
+             │ Candidate Pairs             │
+             │                             │
+             │ S1 ↔ S2                    │
+             │ S1 ↔ S3                    │
+             └─────────────┬───────────────┘
+                           │
+                           ▼
+                ┌────────────────────┐
+                │ Feature Engineering│
+                │                    │
+                │ name similarity    │
+                │ address similarity │
+                │ token similarity   │
+                │ country equality   │
+                │ char TF-IDF        │
+                └─────────┬──────────┘
+                          │
+                          ▼
+                 ┌──────────────────┐
+                 │ Pair Classifier  │
+                 │                  │
+                 │ LightGBM /       │
+                 │ XGBoost /        │
+                 │ Logistic Reg.    │
+                 └────────┬─────────┘
+                          │
+                          ▼
+                 ┌──────────────────┐
+                 │ Threshold +      │
+                 │ Singleton Logic  │
+                 └────────┬─────────┘
+                          │
+                          ▼
+             ┌─────────────────────────┐
+             │ matching_results.tsv   │
+             │ candidate_pairs.tsv    │
+             └─────────────────────────┘
+
+
